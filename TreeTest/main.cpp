@@ -1,6 +1,9 @@
 
 #include "tree.h"
 
+#include <Windows.h>
+
+
 #include <functional>
 #include <iostream>
 #include <stack>
