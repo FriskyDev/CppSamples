@@ -1,5 +1,7 @@
 #include "FinalAction.h"
 
+#include <Windows.h>
+
 #include <exception>
 #include <iostream>
 #include <functional>
