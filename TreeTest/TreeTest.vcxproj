@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{98060649-BB3B-4A71-9D95-A0E4F301A348}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ModernC</RootNamespace>
+    <RootNamespace>TreeTest</RootNamespace>
     <ProjectName>TreeTest</ProjectName>
     <IntDir>$(SolutionDir)build\obj\$(ProjectName)\$(Configuration)\$(Patform)</IntDir>
     <OutDir>$(SolutionDir)build\$(Configuration)\$(Patform)</OutDir>
