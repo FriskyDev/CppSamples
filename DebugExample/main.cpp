@@ -1,10 +1,13 @@
-// DebugExample.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+
+void DisplayGreeting(const char* const value)
+{
+    const char* const prefix = "Hello";
+    printf("%s, %s\n", prefix, value);
+}
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    DisplayGreeting("debugger");
 }
 
