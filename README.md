@@ -1,5 +1,9 @@
 # C++ Sample Code
 
+## DebugExample
+
+Code that can be used as an example in WindBg for debugging type scenarios.
+
 ## TreeTest
 Simple project that creates a binary tree, adds some nodes to the tree, and traverses the tree without recusion.
 
