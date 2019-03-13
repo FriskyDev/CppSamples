@@ -10,6 +10,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Debug\main.cod" />
+    <None Include="..\build\Release\x64\gen-asm.map" />
+    <None Include="..\build\obj\gen-asm\Release\x64\main.cod" />
   </ItemGroup>
 </Project>
