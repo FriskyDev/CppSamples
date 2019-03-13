@@ -1,4 +1,7 @@
-# C++ Sample Code
+# C++ Sample Code (CppSamples)
+
+These are Windows C++ Visual Studio projects. I have another library called `cpp-samples` which are linux and
+make based projects.
 
 ## DebugExample
 
