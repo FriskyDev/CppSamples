@@ -16,3 +16,9 @@ the function throws.
 ## DC-Tree
 
 Direct Composition example code.
+
+## gen-asm
+
+Stands for generate assembly language. This project allows you to put code in a file, compile it, and look at
+the assembly/machine code output from the compile. The output file containing assembly code is `main.cod` and the map
+file is `main.map`.
