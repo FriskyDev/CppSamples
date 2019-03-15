@@ -133,10 +133,11 @@ HRESULT App::InitializeDirectCompositionDevice()
 
 HRESULT App::CreateResources()
 {
-    return LoadResourceGDIBitmap(L"Image", m_hBitmap);
+    //return LoadResourceGDIBitmap(L"Image", m_hBitmap);
     //return LoadResourceGDIBitmap(L"#113", m_hBitmap);
     //return LoadResourceGDIBitmap(L"IDB_LOGO", m_hBitmap);
     //return LoadResourceGDIBitmap(MAKEINTRESOURCE(IDB_LOGO), m_hBitmap);
+    return LoadResourceGDIBitmap(MAKEINTRESOURCE(IDB_LOGO), m_hBitmap);
 }
 
 void App::DiscardResources()
