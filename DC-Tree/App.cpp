@@ -22,6 +22,8 @@ App::App() :
 
 App::~App()
 {
+    DiscardResources();
+
     SafeRelease(&m_pDCompDevice);
     SafeRelease(&m_pDCompTarget);
     SafeRelease(&m_pD3D11Device);
@@ -133,16 +135,15 @@ HRESULT App::InitializeDirectCompositionDevice()
 
 HRESULT App::CreateResources()
 {
-    //return LoadResourceGDIBitmap(L"Image", m_hBitmap);
-    //return LoadResourceGDIBitmap(L"#113", m_hBitmap);
-    //return LoadResourceGDIBitmap(L"IDB_LOGO", m_hBitmap);
-    //return LoadResourceGDIBitmap(MAKEINTRESOURCE(IDB_LOGO), m_hBitmap);
     return LoadResourceGDIBitmap(MAKEINTRESOURCE(IDB_LOGO), m_hBitmap);
 }
 
 void App::DiscardResources()
 {
-    DeleteObject(m_hBitmap);
+    if (m_hBitmap) {
+        DeleteObject(m_hBitmap);
+        m_hBitmap = nullptr;
+    }
 }
 
 void App::RunMessageLoop()
@@ -161,7 +162,7 @@ HRESULT App::OnClientClick()
     float yOffset = 20; // vertical position of visual
 
     // create a visual object
-    IDCompositionVisual *pVisual = nullptr;
+    IDCompositionVisual* pVisual = nullptr;
     hr = m_pDCompDevice->CreateVisual(&pVisual);
 
     IDCompositionSurface *pSurface = nullptr;
@@ -241,7 +242,6 @@ LRESULT CALLBACK App::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
                 case WM_DESTROY:
                 {
                     PostQuitMessage(0);
-                    pApp->DiscardResources();
                 }
                 wasHandled = true;
                 result = 1;
@@ -264,7 +264,7 @@ HRESULT App::LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP &hbmp)
         auto msg = ErrorMessage(L"creating resources");
         MessageBox(nullptr, msg.c_str(), L"Failed to load image", MB_OK);
 
-        EnumResourceTypes(HINST_THISCOMPONENT, (ENUMRESTYPEPROC)EnumTypesFunc,0);
+        EnumResourceTypes(HINST_THISCOMPONENT, (ENUMRESTYPEPROC)EnumTypesFunc, 0);
 
         return E_FAIL;
     }

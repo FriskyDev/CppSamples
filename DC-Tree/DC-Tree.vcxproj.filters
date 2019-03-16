@@ -17,7 +17,7 @@
     <ClInclude Include="Util.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="C:\Users\cryst\Pictures\Avatar.jpg" />
+    <Image Include="Avatar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
