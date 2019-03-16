@@ -54,7 +54,7 @@ std::tstring GetFormatedMessage(DWORD err = 0)
 
 LPVOID g_fiber;
 
-void FiberFunc(LPVOID lpParameter)
+void WINAPI FiberFunc(LPVOID lpParameter)
 {
     UNREFERENCED_PARAMETER(lpParameter);
 
@@ -64,7 +64,7 @@ void FiberFunc(LPVOID lpParameter)
     SwitchToFiber(g_fiber);
 }
 
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     UNREFERENCED_PARAMETER(hInstance);
     UNREFERENCED_PARAMETER(hPrevInstance);
