@@ -1,5 +1,6 @@
 #include "ComponentObjectModel.hpp"
 
+
 ComponentObjectModel::ComponentObjectModel()
 {
     // ignore return and run the program even in the unlikely event that HeapSetInformation fails

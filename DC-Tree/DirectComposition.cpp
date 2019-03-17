@@ -3,8 +3,8 @@
 
 Direct3D::Direct3D()
 {
-    // Create the D3D device object. The D3D11_CREATE_DEVICE_BGRA_SUPPORT
-    // flag enables rendering on surfaces using Direct2D.
+    // create the D3D device object
+    // note: rendering to Direct2D surfaces enabled via D3D11_CREATE_DEVICE_BGRA_SUPPORT
     status = D3D11CreateDevice(
         nullptr,
         D3D_DRIVER_TYPE_HARDWARE,

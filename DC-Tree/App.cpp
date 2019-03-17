@@ -6,10 +6,12 @@
 #include "EnumResource.hpp"
 #include "resource.h"
 
+
 #ifndef HINST_THISCOMPONENT
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 #endif
+
 
 App::App() :
     m_hwnd(nullptr),
@@ -49,10 +51,10 @@ HRESULT App::Initialize()
         OutputDebugString(msg.c_str());
     }
 
-    // Create the application window.
-    //
-    // Because the CreateWindow function takes its size in pixels, we
-    // obtain the system DPI and use it to scale the window size.
+    // create the application window
+
+    // because the CreateWindow function takes its size in pixels,
+    // we obtain the system DPI and use it to scale the window size
     int dpiX = 0;
     int dpiY = 0;
     HDC hdc = GetDC(nullptr);
@@ -81,8 +83,7 @@ HRESULT App::Initialize()
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         UpdateWindow(m_hwnd);
 
-        // Initialize DirectComposition resources, such as the
-        // device object and composition target object.
+        // initialize DirectComposition resources
         hr = InitializeDirectCompositionDevice();
     }
 
@@ -95,8 +96,8 @@ HRESULT App::Initialize()
 
 HRESULT App::InitializeDirectCompositionDevice()
 {
-    // Create the D3D device object. The D3D11_CREATE_DEVICE_BGRA_SUPPORT
-    // flag enables rendering on surfaces using Direct2D.
+    // create the D3D device object
+    // note: rendering to Direct2D surfaces enabled via D3D11_CREATE_DEVICE_BGRA_SUPPORT
     D3D_FEATURE_LEVEL featureLevelSupported;
     HRESULT hr = D3D11CreateDevice(
         nullptr,
@@ -111,20 +112,19 @@ HRESULT App::InitializeDirectCompositionDevice()
         nullptr);
 
 
-    // Check the result of calling D3D11CreateDriver.
-    IDXGIDevice *pDXGIDevice = nullptr;
+    // need the DXGI device to create bitmap surfaces
+    IDXGIDevice* pDXGIDevice = nullptr;
     if (SUCCEEDED(hr)) {
-        // Create the DXGI device used to create bitmap surfaces.
+        // acquire the graphics infrastructure device
         hr = m_pD3D11Device->QueryInterface(&pDXGIDevice);
     }
 
     if (SUCCEEDED(hr)) {
-        // Create the DirectComposition device object.
+        // create the DirectComposition device object
         hr = DCompositionCreateDevice(pDXGIDevice, __uuidof(IDCompositionDevice), reinterpret_cast<void **>(&m_pDCompDevice));
     }
     if (SUCCEEDED(hr)) {
-        // Create the composition target object based on the 
-        // specified application window.
+        // create the composition target object based for the application window
         hr = m_pDCompDevice->CreateTargetForHwnd(m_hwnd, TRUE, &m_pDCompTarget);
     }
 
@@ -161,14 +161,14 @@ HRESULT App::OnClientClick()
     float xOffset = 20; // horizonal position of visual
     float yOffset = 20; // vertical position of visual
 
-    // create a visual object
+    // create a visual
     IDCompositionVisual* pVisual = nullptr;
     hr = m_pDCompDevice->CreateVisual(&pVisual);
 
     IDCompositionSurface *pSurface = nullptr;
     if (SUCCEEDED(hr)) {
         // create a composition surface and render a gdi bitmap to the surface
-        hr = MyCreateGDIRenderedDCompSurface(m_hBitmap, &pSurface);
+        hr = CreateGDIRenderedDCompSurface(m_hBitmap, &pSurface);
     }
 
     if (SUCCEEDED(hr)) {
@@ -177,8 +177,7 @@ HRESULT App::OnClientClick()
     }
 
     if (SUCCEEDED(hr)) {
-        // Set the horizontal and vertical position of the visual relative
-        // to the upper-left corner of the composition target window.
+        // set the horizontal and vertical position of the visual relative to the upper-left corner of the composition target window
         hr = pVisual->SetOffsetX(xOffset);
         if (SUCCEEDED(hr)) {
             hr = pVisual->SetOffsetY(yOffset);
@@ -207,17 +206,11 @@ LRESULT CALLBACK App::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 
     if (message == WM_CREATE) {
         LPCREATESTRUCT pcs = (LPCREATESTRUCT)lParam;
-        App *pApp = (App *)pcs->lpCreateParams;
-
-        ::SetWindowLongPtrW(
-            hwnd,
-            GWLP_USERDATA,
-            PtrToUlong(pApp)
-        );
-
+        App* pApp = (App*)pcs->lpCreateParams;
+        ::SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pApp));
         result = 1;
     } else {
-        App *pApp = reinterpret_cast<App *>(static_cast<LONG_PTR>(::GetWindowLongPtrW(hwnd, GWLP_USERDATA)));
+        App* pApp = reinterpret_cast<App *>(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
         bool wasHandled = false;
 
@@ -257,7 +250,7 @@ LRESULT CALLBACK App::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
     return result;
 }
 
-HRESULT App::LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP &hbmp)
+HRESULT App::LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP& hbmp)
 {
     hbmp = static_cast<HBITMAP>(LoadImage(HINST_THISCOMPONENT, resourceName, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
     if (hbmp == nullptr) {
@@ -272,14 +265,14 @@ HRESULT App::LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP &hbmp)
     return S_OK;
 }
 
-HRESULT App::MyCreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurface **ppSurface)
+HRESULT App::CreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurface** ppSurface)
 {
     HRESULT hr = S_OK;
 
     int bitmapWidth = 0;
     int bitmapHeight = 0;
     int bmpSize = 0;
-    BITMAP bmp = { };
+    BITMAP bmp{};
     HBITMAP hBitmapOld = nullptr;
 
     HDC hSurfaceDC = nullptr;
@@ -287,46 +280,42 @@ HRESULT App::MyCreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurfa
 
     IDXGISurface1 *pDXGISurface = nullptr;
     IDCompositionSurface *pDCSurface = nullptr;
-    POINT pointOffset = { };
+    POINT pointOffset{};
 
-    if (ppSurface == nullptr)
+    if (ppSurface == nullptr) {
         return E_INVALIDARG;
+    }
 
-    // Get information about the bitmap.
+    // get information about the bitmap
     bmpSize = GetObject(hBitmap, sizeof(BITMAP), &bmp);
 
     hr = bmpSize ? S_OK : E_FAIL;
     if (SUCCEEDED(hr)) {
-        // Save the bitmap dimensions.
+        // save the bitmap dimensions
         bitmapWidth = bmp.bmWidth;
         bitmapHeight = bmp.bmHeight;
 
-        // Create a DirectComposition-compatible surface that is the same size 
-        // as the bitmap. The DXGI_FORMAT_B8G8R8A8_UNORM flag is required for 
-        // rendering on the surface using GDI via GetDC.
-        hr = m_pDCompDevice->CreateSurface(bitmapWidth, bitmapHeight,
-            DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_ALPHA_MODE_IGNORE, &pDCSurface);
+        // create a DirectComposition-compatible surface that is the same size as the bitmap
+        // the DXGI_FORMAT_B8G8R8A8_UNORM flag is required for rendering on the surface using GDI via GetDC
+        hr = m_pDCompDevice->CreateSurface(bitmapWidth, bitmapHeight, DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_ALPHA_MODE_IGNORE, &pDCSurface);
     }
 
     if (SUCCEEDED(hr)) {
-        // Begin rendering to the surface.
-        hr = pDCSurface->BeginDraw(nullptr, __uuidof(IDXGISurface1),
-            reinterpret_cast<void**>(&pDXGISurface), &pointOffset);
+        // begin rendering to the surface
+        hr = pDCSurface->BeginDraw(nullptr, __uuidof(IDXGISurface1), reinterpret_cast<void**>(&pDXGISurface), &pointOffset);
     }
 
     if (SUCCEEDED(hr)) {
-        // Get the device context (DC) for the surface.
+        // get the device context (DC) for the surface.
         hr = pDXGISurface->GetDC(FALSE, &hSurfaceDC);
     }
 
     if (SUCCEEDED(hr)) {
-        // Create a compatible DC and select the surface 
-        // into the DC.
+        // create a compatible DC and select the surface into the DC
         hBitmapDC = CreateCompatibleDC(hSurfaceDC);
         if (hBitmapDC != nullptr) {
             hBitmapOld = (HBITMAP)SelectObject(hBitmapDC, hBitmap);
-            BitBlt(hSurfaceDC, pointOffset.x, pointOffset.y,
-                bitmapWidth, bitmapHeight, hBitmapDC, 0, 0, SRCCOPY);
+            BitBlt(hSurfaceDC, pointOffset.x, pointOffset.y, bitmapWidth, bitmapHeight, hBitmapDC, 0, 0, SRCCOPY);
 
             if (hBitmapOld) {
                 SelectObject(hBitmapDC, hBitmapOld);
@@ -337,11 +326,11 @@ HRESULT App::MyCreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurfa
         pDXGISurface->ReleaseDC(nullptr);
     }
 
-    // End the rendering.
+    // end the rendering
     pDCSurface->EndDraw();
     *ppSurface = pDCSurface;
 
-    // Call an application-defined macro to free the surface pointer.
+    // call an application-defined macro to free the surface pointer
     SafeRelease(&pDXGISurface);
 
     return hr;

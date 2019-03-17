@@ -4,6 +4,7 @@
 
 #include <strsafe.h>
 
+
 std::wstring GetFormattedMessage(LPCWSTR message, ...)
 {
 

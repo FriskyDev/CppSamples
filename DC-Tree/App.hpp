@@ -1,6 +1,7 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN     // Exclude rarely-used items from Windows headers
+// exclude rarely-used items from Windows headers
+#define WIN32_LEAN_AND_MEAN
 
 #include <Windows.h>
 
@@ -8,6 +9,7 @@
 #include <dcomp.h>
 
 #include "ComponentObjectModel.hpp"
+
 
 extern ComponentObjectModel com;
 
@@ -29,17 +31,16 @@ private:
 
     HRESULT OnClientClick();
 
-    HRESULT LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP &hbmp
-    );
+    HRESULT LoadResourceGDIBitmap(PCWSTR resourceName, HBITMAP& hbmp);
 
-    HRESULT MyCreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurface **ppSurface);
+    HRESULT CreateGDIRenderedDCompSurface(HBITMAP hBitmap, IDCompositionSurface** ppSurface);
 
     static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
     HWND m_hwnd;
     HBITMAP m_hBitmap;
-    ID3D11Device *m_pD3D11Device;
-    IDCompositionDevice *m_pDCompDevice;
-    IDCompositionTarget *m_pDCompTarget;
+    ID3D11Device* m_pD3D11Device;
+    IDCompositionDevice* m_pDCompDevice;
+    IDCompositionTarget* m_pDCompTarget;
 };

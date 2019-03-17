@@ -36,11 +36,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 int WINAPI WinMain(
     HINSTANCE hInstance,
-    HINSTANCE /* hPrevInstance */,
-    LPSTR /* lpCmdLine */,
-    int /* nCmdShow */
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nCmdShow
 )
 {
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(nCmdShow);
+
     if (SUCCEEDED(com.status)) {
         com.hinst = hInstance;
         {

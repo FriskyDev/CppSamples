@@ -1,13 +1,14 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN     // Exclude rarely-used items from Windows headers
+// exclude rarely-used items from Windows headers
+#define WIN32_LEAN_AND_MEAN
 
 #include <Windows.h>
 
 #include <string>
 
 template <typename T>
-void SafeRelease(T **ppT)
+void SafeRelease(T** ppT)
 {
     if (*ppT != nullptr) {
         (*ppT)->Release();
