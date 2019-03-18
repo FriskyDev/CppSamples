@@ -1,4 +1,5 @@
-#define WIN32_LEAN_AND_MEAN     // Exclude rarely-used items from Windows headers
+// exclude rarely-used items from Windows headers
+#define WIN32_LEAN_AND_MEAN
 
 #include <Windows.h>
 #include <d3d11.h>
@@ -34,12 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 }
 #else
 
-int WINAPI WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPSTR lpCmdLine,
-    int nCmdShow
-)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -56,7 +52,7 @@ int WINAPI WinMain(
         }
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 #endif
