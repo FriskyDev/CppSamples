@@ -11,6 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\build\Release\x64\gen-asm.map" />
-    <None Include="..\build\obj\gen-asm\Release\x64\main.cod" />
+    <None Include="..\build\Release\x64\gen-asm\obj\main.cod" />
   </ItemGroup>
 </Project>
