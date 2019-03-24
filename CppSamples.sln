@@ -27,6 +27,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Process", "Process\Process.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fibers", "Fibers\Fibers.vcxproj", "{DC02132A-BDFB-4698-8761-1B170D7D293F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Thread2", "Thread2\Thread2.vcxproj", "{A47B2220-D1C0-4CD0-99E0-389FB91805BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8994599F-6F56-4E68-8F42-6E292534B4FE}"
+	ProjectSection(SolutionItems) = preProject
+		common\Util.cpp = common\Util.cpp
+		common\Util.hpp = common\Util.hpp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +109,12 @@ Global
 		{DC02132A-BDFB-4698-8761-1B170D7D293F}.Release|x64.ActiveCfg = Release|Win32
 		{DC02132A-BDFB-4698-8761-1B170D7D293F}.Release|x86.ActiveCfg = Release|Win32
 		{DC02132A-BDFB-4698-8761-1B170D7D293F}.Release|x86.Build.0 = Release|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Debug|x64.ActiveCfg = Debug|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Debug|x86.ActiveCfg = Debug|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Debug|x86.Build.0 = Debug|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x64.ActiveCfg = Release|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x86.ActiveCfg = Release|Win32
+		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
