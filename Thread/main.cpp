@@ -50,18 +50,6 @@ std::tstring GetFormatedMessage(DWORD err = 0)
     return result;
 }
 
-LPVOID g_fiber;
-
-void WINAPI FiberFunc(LPVOID lpParameter)
-{
-    UNREFERENCED_PARAMETER(lpParameter);
-
-    // does nothing and ends
-    OutputDebugString(L"Hello from the fiber\n");
-
-    SwitchToFiber(g_fiber);
-}
-
 HANDLE ghMutex;
 
 
@@ -151,13 +139,8 @@ void SampleThreadsWrittingToDabase()
     CloseHandle(ghMutex);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+void OutputThreadAndProcessInfo()
 {
-    UNREFERENCED_PARAMETER(hInstance);
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
-    UNREFERENCED_PARAMETER(nShowCmd);
-
     DWORD pid = GetCurrentProcessId();
     DWORD tid = GetCurrentThreadId();
     {
@@ -174,7 +157,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         auto errMsg = GetFormatedMessage(err);
         auto msg = string_format(L"GetThreadContext() returned 0x%08X (%d): %s\n", err, err, errMsg.c_str());
         MessageBox(nullptr, msg.c_str(), L"Thread", MB_ICONERROR);
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
     //WOW64_CONTEXT ctx32{};
@@ -186,29 +169,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //    MessageBox(nullptr, msg.c_str(), "Thread", MB_ICONERROR);
     //    return EXIT_FAILURE;
     //}
+}
 
-    g_fiber = ConvertThreadToFiber(nullptr);
-    if (!g_fiber) {
-        auto err = GetLastError();
-        auto errMsg = GetFormatedMessage(err);
-        auto msg = string_format(L"ConvertThreadToFiber() returned 0x%08X (%d): %s\n", err, err, errMsg.c_str());
-        MessageBox(nullptr, msg.c_str(), L"Thread", MB_ICONERROR);
-        return EXIT_FAILURE;
-    }
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+{
+    UNREFERENCED_PARAMETER(hInstance);
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(nShowCmd);
 
-    auto child = CreateFiber(0, FiberFunc, nullptr);
-    if (!child) {
-        auto err = GetLastError();
-        auto errMsg = GetFormatedMessage(err);
-        auto msg = string_format(L"CreateFiber() returned 0x%08X (%d): %s\n", err, err, errMsg.c_str());
-        MessageBox(nullptr, msg.c_str(), L"Thread", MB_ICONERROR);
-        return EXIT_FAILURE;
-    }
-
-    SwitchToFiber(child);
-
-    DeleteFiber(child);
-    OutputDebugString(L"Fiber ended and deleted\n");
+    OutputThreadAndProcessInfo();
 
     OutputDebugString(L"Now showing simulated writes to database...\n");
     SampleThreadsWrittingToDabase();
