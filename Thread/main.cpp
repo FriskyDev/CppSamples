@@ -118,7 +118,7 @@ void OutputThreadAndProcessInfo()
     BOOL result = GetThreadContext(th, &ctx);
     if (!result) {
         auto err = GetLastError();
-        auto errMsg = GetFormatedMessage(err);
+        auto errMsg = get_system_error_message(err);
         auto msg = string_format(L"GetThreadContext() returned 0x%08X (%d): %s\n", err, err, errMsg.c_str());
         MessageBox(nullptr, msg.c_str(), L"Thread", MB_ICONERROR);
         exit(EXIT_FAILURE);
@@ -128,7 +128,7 @@ void OutputThreadAndProcessInfo()
     //result = Wow64GetThreadContext(th, &ctx32);
     //if (!result) {
     //    auto err = GetLastError();
-    //    auto errMsg = GetFormatedMessage(err);
+    //    auto errMsg = get_system_error_message(err);
     //    auto msg = string_format(L"Wow64GetThreadContext() returned 0x%08X (%d): %s\n\nMust not be a 32-bit application on a 64-bit OS.", err, err, errMsg.c_str());
     //    MessageBox(nullptr, msg.c_str(), "Thread", MB_ICONERROR);
     //    return EXIT_FAILURE;
