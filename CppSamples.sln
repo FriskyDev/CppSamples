@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{899459
 		common\Util.hpp = common\Util.hpp
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateFile", "CreateFile\CreateFile.vcxproj", "{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -115,6 +117,12 @@ Global
 		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x64.ActiveCfg = Release|Win32
 		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x86.ActiveCfg = Release|Win32
 		{A47B2220-D1C0-4CD0-99E0-389FB91805BF}.Release|x86.Build.0 = Release|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Debug|x64.ActiveCfg = Debug|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Debug|x86.ActiveCfg = Debug|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Debug|x86.Build.0 = Debug|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Release|x64.ActiveCfg = Release|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Release|x86.ActiveCfg = Release|Win32
+		{B5A11A9D-EE0A-4DDD-9928-479AA65FF617}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
