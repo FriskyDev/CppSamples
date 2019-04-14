@@ -6,8 +6,17 @@ float multiply(float a, float b)
     return c;
 }
 
+void DisplayGreeting(const char const* value)
+{
+    const char const* prefix = "Hello";
+    printf("%s, %s\n", prefix, value);
+    return;
+}
+
 int main()
 {
+    DisplayGreeting("world");
+
     float a = 10;
     float b = 3;
     float c = a * b;
