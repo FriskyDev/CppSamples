@@ -219,17 +219,21 @@ VOID OnPaint(HWND hWnd)
     auto tmpPen = SelectObject(hDC, pen);
     auto tmpBrush = SelectObject(hDC, brush);
 
+    // draw start arrow
     MoveToEx(hDC, 60, 150, nullptr);
     LineTo(hDC, 100, 150);
     LineTo(hDC, 95, 145);
     LineTo(hDC, 95, 155);
     LineTo(hDC, 100, 150);
 
+    // draw start circle
     Ellipse(hDC, 100, 100, 200, 200);
 
+    // draw end circle
     Ellipse(hDC, 250, 100, 350, 200);
     Ellipse(hDC, 255, 105, 345, 195);
 
+    // draw arc from start to end with arrow
     MoveToEx(hDC, 150, 100, nullptr);
     SetArcDirection(hDC, AD_CLOCKWISE);
     ArcTo(hDC, 150, 75, 300, 125, 150, 100, 300, 100);
@@ -237,14 +241,17 @@ VOID OnPaint(HWND hWnd)
     LineTo(hDC, 299, 90);
     LineTo(hDC, 300, 100);
 
+    // prepare font for text
     HFONT font = CreateFont(14, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));
     auto tmpFont = SelectObject(hDC, font);
 
+    // draw arc label text
     RECT rect{ 200, 50, 250, 100 };
     auto tmpBk = SetBkColor(hDC, bk);
     auto tmpClr = SetTextColor(hDC, clr);
     DrawText(hDC, L" 0, 1 ", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
+    // draw circles label text
     font = CreateFont(24, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));
     SelectObject(hDC, font);
     rect = { 120, 120, 180, 180 };
@@ -255,10 +262,12 @@ VOID OnPaint(HWND hWnd)
     font = CreateFont(28, 0, 0, 0, FW_DONTCARE, FALSE, TRUE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Segoe"));
     SelectObject(hDC, font);
 
+    // draw title text
     rect = { 100, 20, 350, 50 };
     DrawText(hDC, L"Finite Automata", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     SelectObject(hDC, tmpFont);
 
+    // reset drawing objects
     SetTextColor(hDC, tmpClr);
     SetBkColor(hDC, tmpBk);
     SelectObject(hDC, tmpPen);
