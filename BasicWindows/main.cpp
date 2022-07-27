@@ -155,10 +155,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
         case WM_SIZE:
         {
-            int width = LOWORD(lParam);
-            int height = HIWORD(lParam);
+            const int width = LOWORD(lParam);
+            const int height = HIWORD(lParam);
 
-            OnSize(hWnd, wParam, width, height);
+            OnSize(hWnd, UINT(wParam), width, height);
             break;
         }
         case WM_VSCROLL:
@@ -215,7 +215,7 @@ VOID OnPaint(HWND hWnd)
     FillRect(hDC, &ps.rcPaint, brush);
 
     COLORREF clr{ 0x000079FF };
-    HPEN pen = CreatePen(PS_SOLID, 1.5, clr);
+    HPEN pen = CreatePen(PS_SOLID, 1, clr);
     auto tmpPen = SelectObject(hDC, pen);
     auto tmpBrush = SelectObject(hDC, brush);
 
@@ -258,7 +258,6 @@ VOID OnPaint(HWND hWnd)
     rect = { 100, 20, 350, 50 };
     DrawText(hDC, L"Finite Automata", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     SelectObject(hDC, tmpFont);
-
 
     SetTextColor(hDC, tmpClr);
     SetBkColor(hDC, tmpBk);
